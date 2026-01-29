@@ -48,4 +48,10 @@ bot.onReaction(async (handler, { reaction, channelId }) => {
 })
 
 const app = bot.start()
+
+// After your /webhook route
+app.get('/.well-known/agent-metadata.json', async (c) => {
+    return c.json(await bot.getIdentityMetadata())
+})
+
 export default app
