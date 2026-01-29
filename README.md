@@ -1,31 +1,33 @@
-# Quickstart Bot
+# Multilingual Chat Translation Bot
 
-A simple, barebones bot example perfect for beginners learning to build Towns bots.
+A production-ready translation bot for Towns that automatically translates non-English user messages to English when enabled.
 
 # Features
 
-- **Slash commands**: Registering and handling `/commands`
-- **Message handling**: Detecting keywords in messages
-- **Sending messages**: Posting messages to channels
-- **Adding reactions**: Attaching emoji reactions to messages
-- **Reaction events**: Responding to user reactions
+- **Per-user translation settings**: Each user can enable/disable translation for their messages
+- **Automatic translation**: When enabled, non-English messages are automatically translated to English
+- **English detection**: Bot skips translation of messages already in English
+- **Public translations**: Translations are posted as replies visible to all users
+- **Simple commands**: Easy-to-use slash commands for managing settings
+- **No cache needed**: Simple architecture without complex caching
+- **Spam prevention**: Bot ignores bot messages and empty messages
+- **LLM-powered**: Uses io.net Translate Agent for high-quality translations
+
+## How It Works
+
+1. **User enables translation**: User runs `/enable_translate` to opt-in
+2. **User posts message**: User writes in their native language
+3. **English detection**: Bot checks if message is already in English
+4. **Automatic translation**: If not English, bot translates it to English
+5. **Public reply**: Translation is posted as a reply visible to all users
 
 ## Slash Commands
 
-- `/help` - Shows available commands and message triggers
-- `/time` - Displays the current server time
-
-## Message Triggers
-
-- Say "hello" - Bot greets you back
-- Say "ping" - Bot responds with "Pong!" and latency
-- Say "react" - Bot adds a thumbs up reaction to your message
-
-You will need to mention the bot if you're using the `Mentions, Commands, Replies & Reactions` message behavior for your bot.
-
-## Reaction Handling
-
-- React with 👋 to any message - Bot responds with "I saw your wave!"
+| Command | Description |
+|---------|-------------|
+| `/status` | Check your translation status |
+| `/enable_translate` | Enable automatic translation of your messages to English |
+| `/disable_translate` | Disable automatic translation of your messages |
 
 # Setup
 
@@ -42,6 +44,7 @@ You will need to mention the bot if you're using the `Mentions, Commands, Replie
    ```
 
 3. Run the bot:
+
    ```bash
    bun run dev
    ```
@@ -52,55 +55,43 @@ Required variables in `.env`:
 
 - `APP_PRIVATE_DATA` - Your Towns app private data (base64 encoded)
 - `JWT_SECRET` - JWT secret for webhook authentication
+- `IO_API_KEY` - Your io.net API key for translation service
 - `PORT` - Port to run the bot on (optional, defaults to 5123)
 
 # Usage
 
 Once the bot is running, installed to a space and added to a channel:
 
-**Try the slash commands:**
+**To enable translation:**
 
-- `/help` - See all available features
-- `/time` - Get the current time
+1. Run `/enable_translate` in the channel
+2. Your non-English messages will now be automatically translated to English
+3. The translation appears as a reply to your original message
+4. All users can see both your original message and the translation
 
-**Try the message triggers:**
+**To check your status:**
 
-- Type "hello" anywhere in your message
-- Type "ping" to check bot latency
-- Type "react" to get a reaction
+- Run `/status` to see if translation is enabled or disabled
 
-**Try reactions:**
+**To disable translation:**
 
-- Add a 👋 reaction to any message
+- Run `/disable_translate` to stop automatic translation
 
-# Code Structure
 
-The bot consists of two main files:
+# Important Notes
 
-## `src/commands.ts`
+- **Opt-in only**: Translation is disabled by default - users must enable it
+- **Public translations**: Translations are visible to all users in the channel
+- **English target**: All translations are to English only
+- **English detection**: Bot automatically skips translation of English messages
+- **Bot messages**: The bot ignores messages from other bots and empty messages
+- **Per-user settings**: Each user controls their own translation preference
 
-Defines the slash commands available to users. Commands registered here appear in the slash command menu.
 
-## `src/index.ts`
+# API Integration
 
-Main bot logic with:
+The bot uses io.net's Translate Agent API for LLM-based translation:
 
-1. **Bot initialization** (`makeTownsBot`) - Creates bot instance with credentials and commands
-2. **Slash command handlers** (`onSlashCommand`) - Handle `/help` and `/time` commands
-3. **Message handler** (`onMessage`) - Respond to message keywords (hello, ping, react)
-4. **Reaction handler** (`onReaction`) - Respond to emoji reactions (👋)
-5. **Bot server setup** (`bot.start()`) - Starts the bot server with a Hono HTTP server
-
-## Extending this Bot
-
-To add your own features:
-
-1. **Add a slash command:**
-   - Add to `src/commands.ts`
-   - Go to `src/index.ts` and create a handler with `bot.onSlashCommand('yourcommand', async (handler, event) => { ... })`
-
-2. **Add message triggers:**
-   - Add conditions in the `bot.onMessage()` handler
-
-3. **Handle more events:**
-   - Use `bot.onReaction()`, `bot.onMessageEdit()`, `bot.onChannelJoin()`, etc.
+**Current limitations:**
+- User settings are lost on bot restart
+- No persistent storage across deployments

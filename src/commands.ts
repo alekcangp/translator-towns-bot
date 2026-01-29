@@ -1,15 +1,22 @@
 import type { BotCommand } from '@towns-protocol/bot'
 
-// Those commands will be registered to the bot as soon as the bot is initialized
-// and will be available in the slash command autocomplete.
+/**
+ * Bot Commands
+ * These commands will be registered to the bot as soon as the bot is initialized
+ * and will be available in the slash command autocomplete.
+ */
 const commands = [
     {
-        name: 'help',
-        description: 'Get help with bot commands',
+        name: 'status',
+        description: 'Check your translation status',
     },
     {
-        name: 'time',
-        description: 'Get the current time',
+        name: 'enable_translate',
+        description: 'Enable automatic translation of your messages to English',
+    },
+    {
+        name: 'disable_translate',
+        description: 'Disable automatic translation of your messages',
     },
 ] as const satisfies BotCommand[]
 
