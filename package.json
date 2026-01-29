@@ -6,10 +6,10 @@
   "scripts": {
     "build": "tsc --noEmit",
     "clean": "rm -rf dist",
-    "dev": "C:\\Users\\Yarex\\.bun\\bin\\bun.exe run --watch src/index.ts",
+    "dev": "bun run --watch src/index.ts",
     "lint": "eslint --format unix ./src  --max-warnings=0",
     "lint:fix": "eslint --format unix ./src  --max-warnings=0 --fix",
-    "start": "C:\\Users\\Yarex\\.bun\\bin\\bun.exe run src/index.ts",
+    "start": "bun run src/index.ts",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
