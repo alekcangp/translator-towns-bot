@@ -74,8 +74,8 @@ bot.onMessage(async (handler, { message, channelId, eventId, userId }) => {
             return
         }
 
-        // Check if user has translation enabled
-        const translationEnabled = userTranslationSettings.get(userId) ?? false
+        // Check if user has translation enabled (enabled by default)
+        const translationEnabled = userTranslationSettings.get(userId) ?? true
         if (!translationEnabled) {
             console.log(`⏭ Translation disabled for user ${userId}`)
             return
@@ -121,7 +121,7 @@ bot.onMessage(async (handler, { message, channelId, eventId, userId }) => {
 bot.onSlashCommand('status', async (handler, { channelId, userId, eventId }) => {
     console.log(`ℹ️ /status command executed by user ${userId} in channel ${channelId}`)
     
-    const translationEnabled = userTranslationSettings.get(userId) ?? false
+    const translationEnabled = userTranslationSettings.get(userId) ?? true
     const status = translationEnabled ? '✅ Enabled' : '❌ Disabled'
     
     await handler.sendMessage(channelId, `Translation: ${status}`, { replyId: eventId })

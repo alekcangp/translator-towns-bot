@@ -15,11 +15,10 @@ A production-ready translation bot for Towns that automatically translates non-E
 
 ## How It Works
 
-1. **User enables translation**: User runs `/enable_translate` to opt-in
-2. **User posts message**: User writes in their native language
-3. **English detection**: Bot checks if message is already in English
-4. **Automatic translation**: If not English, bot translates it to English
-5. **Public reply**: Translation is posted as a reply visible to all users
+1. **User posts message**: User writes in their native language
+2. **English detection**: Bot checks if message is already in English
+3. **Automatic translation**: If not English, bot translates it to English
+4. **Public reply**: Translation is posted as a reply visible to all users
 
 ## Slash Commands
 
@@ -43,7 +42,7 @@ A production-ready translation bot for Towns that automatically translates non-E
    bun install
    ```
 
-3. Run the bot:
+3. Run bot:
 
    ```bash
    bun run dev
@@ -62,35 +61,25 @@ Required variables in `.env`:
 
 Once the bot is running, installed to a space and added to a channel:
 
-**To enable translation:**
-
-1. Run `/enable_translate` in the channel
-2. Your non-English messages will now be automatically translated to English
-3. The translation appears as a reply to your original message
-4. All users can see both your original message and the translation
-
-**To check your status:**
-
-- Run `/status` to see if translation is enabled or disabled
+**Translation is enabled by default** - your non-English messages will be automatically translated to English.
 
 **To disable translation:**
 
 - Run `/disable_translate` to stop automatic translation
 
+**To re-enable translation:**
 
-# Important Notes
+- Run `/enable_translate` to resume automatic translation
 
-- **Opt-in only**: Translation is disabled by default - users must enable it
-- **Public translations**: Translations are visible to all users in the channel
-- **English target**: All translations are to English only
-- **English detection**: Bot automatically skips translation of English messages
-- **Bot messages**: The bot ignores messages from other bots and empty messages
-- **Per-user settings**: Each user controls their own translation preference
+**To check your status:**
+
+- Run `/status` to see if translation is enabled or disabled
 
 
 # API Integration
 
 The bot uses io.net's Translate Agent API for LLM-based translation:
+
 
 **Current limitations:**
 - User settings are lost on bot restart
